@@ -1,0 +1,16 @@
+logging.level:
+  com.mgg.devicemanagement: DEBUG
+
+spring:
+  application:
+    name: device-management
+  datasource:
+    url: jdbc:postgresql://localhost:15432/devicemng
+    username: postgres
+    password: postgres
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+
