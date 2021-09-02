@@ -1,6 +1,5 @@
 package com.mgg.devicemanagement.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mgg.devicemanagement.dto.request.DeviceRequestDto;
 import com.mgg.devicemanagement.dto.response.DeviceResponseDto;

@@ -1,4 +1,4 @@
-package com.mgg.devicemanagement;
+package com.mgg.devicemanagement.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mgg.devicemanagement.dto.request.DeviceRequestDto;
@@ -12,15 +12,13 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
-import org.springframework.test.web.servlet.ResultActions;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import java.util.List;
-import java.util.Map;
+
 import static com.mgg.devicemanagement.constants.RestApiUrlConstants.BASE;
 import static com.mgg.devicemanagement.constants.RestApiUrlConstants.DEVICES;
 import static org.hamcrest.Matchers.*;
@@ -209,7 +207,7 @@ public class DeviceControllerTest extends AbstractIntegrationTest {
             patch(BASE + "/devices/" + deviceKey)
                 .content(patchRequest)
                 .header("Content-Type", "application/json-patch+json"))
-        .andExpect(status().isNotFound());
+        .andExpect(status().isOk());
   }
 
   private Device createDeviceWithBrandAndNameOnDb(String brand, String name) {
