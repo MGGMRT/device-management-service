@@ -10,33 +10,33 @@ import java.time.LocalDateTime;
 @Table(name = "devices")
 public class Device {
 
-    @Id
-    @GeneratedValue
-    Long id;
+  @Id @GeneratedValue Long id;
 
-    @Column(name ="deviceKey",nullable = false)
-    String deviceKey;
+  @Column(name = "deviceKey", nullable = false)
+  String deviceKey;
 
-    @Column(name ="name",nullable = false)
-    String name;
+  @Column(name = "name", nullable = false)
+  String name;
 
-    @Column(name ="brand",nullable = false)
-    String brand;
+  @Column(name = "brand", nullable = false)
+  String brand;
 
-    @Column(name ="created_time",nullable = false, updatable = false)
-    LocalDateTime createdTime;
+  @Version Long version;
 
-    @Column(name ="modified_time",nullable = false)
-    LocalDateTime modifiedTime;
+  @Column(name = "created_time", nullable = false, updatable = false)
+  LocalDateTime createdTime;
 
-    @PrePersist
-    protected void prePersist(){
-        this.createdTime = LocalDateTime.now();
-        this.modifiedTime = LocalDateTime.now();
-    }
+  @Column(name = "modified_time", nullable = false)
+  LocalDateTime modifiedTime;
 
-    @PreUpdate
-    public void preUpdate(){
-        this.modifiedTime = LocalDateTime.now();
-    }
+  @PrePersist
+  protected void prePersist() {
+    this.createdTime = LocalDateTime.now();
+    this.modifiedTime = LocalDateTime.now();
+  }
+
+  @PreUpdate
+  public void preUpdate() {
+    this.modifiedTime = LocalDateTime.now();
+  }
 }

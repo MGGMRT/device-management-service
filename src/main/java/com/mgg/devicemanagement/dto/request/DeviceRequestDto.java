@@ -1,14 +1,18 @@
 package com.mgg.devicemanagement.dto.request;
 
 import javax.validation.constraints.NotNull;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import javax.validation.constraints.Size;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @AllArgsConstructor
 @Data
 public class DeviceRequestDto {
-    @NotNull
-    private String deviceName;
-    private String brandName;
+  @NotNull
+  @Size(min = 3, max = 50)
+  private String deviceName;
+
+  @Size(min = 3, max = 50)
+  private String brandName;
 }

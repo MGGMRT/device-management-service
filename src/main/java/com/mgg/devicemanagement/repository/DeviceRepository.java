@@ -8,9 +8,9 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface DeviceRepository extends JpaRepository<Device,Long> {
+public interface DeviceRepository extends JpaRepository<Device, Long> {
 
-    Optional<Device> findByDeviceKey(String deviceKey);
+  Optional<Device> findByDeviceKey(String deviceKey);
 
-    List<Device> findByBrand(String brandName);
+  List<Device> findByBrand(String brandName);
 }

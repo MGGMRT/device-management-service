@@ -5,10 +5,10 @@ import lombok.Value;
 
 @Value
 public class DeviceResponseDto {
-    public String name;
-    public String brand;
+  public String name;
+  public String brand;
 
-    public static DeviceResponseDto from ( String name, String brand) {
-        return new DeviceResponseDto(name, brand);
-    }
+  public static DeviceResponseDto from(String name, String brand) {
+    return new DeviceResponseDto(name, brand);
+  }
 }

@@ -4,6 +4,7 @@ logging.level:
 spring:
   application:
     name: device-management
+    port: 8080
   datasource:
     url: jdbc:postgresql://localhost:15432/devicemng
     username: postgres
@@ -14,3 +15,18 @@ spring:
       ddl-auto: update
     database-platform: org.hibernate.dialect.PostgreSQLDialect
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: info, health, metrics, logging
+  endpoint:
+    metrics:
+      enabled: true
+    health:
+      show-details: always
+info:
+  app:
+    name: Device Management Service
+    description: This is an service to manage devices
+    version: v1.0.0
