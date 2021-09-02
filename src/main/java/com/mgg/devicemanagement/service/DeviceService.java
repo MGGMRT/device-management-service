@@ -26,10 +26,11 @@ public class DeviceService {
   private final DeviceRepository deviceRepository;
   private final ObjectMapper objectMapper;
 
-  public void createDevice(DeviceRequestDto deviceRequestDto) {
+  public DeviceResponseDto createDevice(DeviceRequestDto deviceRequestDto) {
     log.info("creating device");
     Device device = getDevice(deviceRequestDto);
-    deviceRepository.save(device);
+    Device savedDevice = deviceRepository.save(device);
+    return DeviceResponseDto.from(savedDevice.getName(), savedDevice.getBrand(),savedDevice.getDeviceKey());
   }
 
   private Device getDevice(DeviceRequestDto deviceRequestDto) {
@@ -42,7 +43,7 @@ public class DeviceService {
 
   public DeviceResponseDto getDevice(String deviceKey) {
     Device device = getDeviceByDeviceKey(deviceKey);
-    return DeviceResponseDto.from(device.getName(), device.getBrand());
+    return DeviceResponseDto.from(device.getName(), device.getBrand(),device.getDeviceKey());
   }
 
   private Device getDeviceByDeviceKey(String deviceKey) {
@@ -59,7 +60,7 @@ public class DeviceService {
 
   private List<DeviceResponseDto> transformToDeviceResponseDtoList(List<Device> deviceList) {
     return deviceList.stream()
-        .map(item -> DeviceResponseDto.from(item.getName(), item.getBrand()))
+        .map(item -> DeviceResponseDto.from(item.getName(), item.getBrand(),item.getDeviceKey()))
         .collect(Collectors.toList());
   }
 
@@ -72,8 +73,8 @@ public class DeviceService {
     Device device = getDeviceByDeviceKey(deviceKey);
     device.setName(deviceRequestDto.getDeviceName());
     device.setBrand(deviceRequestDto.getBrandName());
-    deviceRepository.save(device);
-    return DeviceResponseDto.from(device.getName(), device.getBrand());
+    Device updatedDevice = deviceRepository.save(device);
+    return DeviceResponseDto.from(updatedDevice.getName(), updatedDevice.getBrand(),updatedDevice.getDeviceKey());
   }
 
   public List<DeviceResponseDto> searchDeviceByBrandName(String brandName) {
@@ -85,7 +86,8 @@ public class DeviceService {
     Device device = getDeviceByDeviceKey(deviceKey);
     Device modifiedDevice = getModifiedDevice(patch, device);
     Device updatedDevice = deviceRepository.save(modifiedDevice);
-    return DeviceResponseDto.from(updatedDevice.getName(), updatedDevice.getBrand());
+    return DeviceResponseDto.from(
+        updatedDevice.getName(), updatedDevice.getBrand(), updatedDevice.getDeviceKey());
   }
 
   private Device getModifiedDevice(JsonPatch patch, Device device) {

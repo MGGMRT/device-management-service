@@ -5,10 +5,12 @@ import javax.validation.constraints.Size;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import static com.mgg.devicemanagement.constants.DeviceManagementServiceConstants.MAX_SIZE_OF_DEVICE_NAME;
 import static com.mgg.devicemanagement.constants.DeviceManagementServiceConstants.MIN_SIZE_OF_DEVICE_NAME;
 
+@NoArgsConstructor
 @AllArgsConstructor
 @Data
 public class DeviceRequestDto {

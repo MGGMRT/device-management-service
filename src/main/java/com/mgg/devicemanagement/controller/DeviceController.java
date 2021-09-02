@@ -42,13 +42,13 @@ public class DeviceController {
       value = DEVICES,
       consumes = MediaType.APPLICATION_JSON_VALUE,
       produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<Void> createDevice(@Valid @RequestBody DeviceRequestDto deviceRequestDto) {
+  public ResponseEntity<DeviceResponseDto> createDevice(@Valid @RequestBody DeviceRequestDto deviceRequestDto) {
     log.info(
         "Creating a device with name={}, brand={}",
         deviceRequestDto.getDeviceName(),
         deviceRequestDto.getBrandName());
-    deviceService.createDevice(deviceRequestDto);
-    return ResponseEntity.status(HttpStatus.CREATED).build();
+    DeviceResponseDto deviceResponseDto = deviceService.createDevice(deviceRequestDto);
+    return ResponseEntity.status(HttpStatus.CREATED).body(deviceResponseDto);
   }
 
   @Operation(

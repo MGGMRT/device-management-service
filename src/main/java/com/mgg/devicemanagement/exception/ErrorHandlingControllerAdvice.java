@@ -46,7 +46,7 @@ public class ErrorHandlingControllerAdvice {
 
   @ExceptionHandler(NotFoundDeviceException.class)
   public ResponseEntity<Object> onNotFoundDeviceException(NotFoundDeviceException e) {
-    return ResponseEntity.badRequest().body(e.getMessage());
+    return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
   }
 
   @ExceptionHandler(OptimisticLockException.class)
