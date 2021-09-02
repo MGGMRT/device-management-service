@@ -30,3 +30,7 @@ info:
     name: Device Management Service
     description: This is an service to manage devices
     version: v1.0.0
+
+springdoc:
+  swagger-ui:
+    disable-swagger-default-url: true
