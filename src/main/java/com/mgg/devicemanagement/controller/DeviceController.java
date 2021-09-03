@@ -123,7 +123,7 @@ public class DeviceController {
 
   @Operation(
       summary = "Partly update the device when device is found for given device key.",
-      method = "PUT")
+      method = "PATCH")
   @ApiResponse(responseCode = "200", description = "The Device object was partly updated.")
   @ApiResponse(
       responseCode = "404",
