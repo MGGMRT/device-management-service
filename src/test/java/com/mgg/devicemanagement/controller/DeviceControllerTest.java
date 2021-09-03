@@ -2,10 +2,12 @@ package com.mgg.devicemanagement.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mgg.devicemanagement.dto.request.DeviceRequestDto;
+import com.mgg.devicemanagement.dto.response.DeviceResponseDto;
 import com.mgg.devicemanagement.model.Device;
 import com.mgg.devicemanagement.repository.DeviceRepository;
 import com.mgg.devicemanagement.util.FakeObjects;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -14,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
+import org.springframework.test.web.servlet.ResultActions;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
@@ -22,6 +25,8 @@ import java.util.List;
 import static com.mgg.devicemanagement.constants.RestApiUrlConstants.BASE;
 import static com.mgg.devicemanagement.constants.RestApiUrlConstants.DEVICES;
 import static org.hamcrest.Matchers.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -195,19 +200,25 @@ public class DeviceControllerTest extends AbstractIntegrationTest {
         .andExpect(status().isNotFound());
   }
 
-  @Disabled
   @Test
   public void updatePartlyDeviceByDeviceKey_shouldReturnOkWhenValidDeviceKeyAndPatchRequest()
       throws Exception {
     Device device = createDeviceOnDb();
     String deviceKey = device.getDeviceKey();
-    String patchRequest = "[ { \"op\": \"replace\", \"path\": \"/brand\", \"value\": \"apple\" } ]";
-    mockMvc
-        .perform(
-            patch(BASE + "/devices/" + deviceKey)
-                .content(patchRequest)
-                .header("Content-Type", "application/json-patch+json"))
-        .andExpect(status().isOk());
+    String patchRequest = "{ \"path\": \"brand\", \"value\": \"apple\" }";
+    ResultActions resultActions = mockMvc
+            .perform(
+                    patch(BASE + "/devices/" + deviceKey)
+                            .content(patchRequest)
+                            .header("Content-Type", "application/json-patch+json"))
+            .andExpect(status().isOk());
+
+    String contentAsString = resultActions.andReturn().getResponse().getContentAsString();
+    DeviceResponseDto deviceResponseDto =objectMapper.readValue(contentAsString, DeviceResponseDto.class);
+    assertEquals("apple",deviceResponseDto.getBrand());
+    assertNotEquals(device.getBrand(),deviceResponseDto.getBrand());
+    assertEquals(device.getName(),deviceResponseDto.getName());
+    assertEquals(device.getDeviceKey(),deviceResponseDto.getDeviceKey());
   }
 
   private Device createDeviceWithBrandAndNameOnDb(String brand, String name) {

@@ -55,17 +55,19 @@ public class ErrorHandlingControllerAdvice {
   }
 
   @ExceptionHandler(HttpServerErrorException.InternalServerError.class)
-  public ResponseEntity<Object> onInternalServerError(HttpServerErrorException.InternalServerError e) {
+  public ResponseEntity<Object> onInternalServerError(
+      HttpServerErrorException.InternalServerError e) {
     return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
   }
 
   @ExceptionHandler(HttpMessageNotReadableException.class)
-  public ResponseEntity<Object> onHttpMessageNotReadableException(HttpMessageNotReadableException e) {
+  public ResponseEntity<Object> onHttpMessageNotReadableException(
+      HttpMessageNotReadableException e) {
     return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
   }
 
   @ExceptionHandler(Exception.class)
   public ResponseEntity<Object> onException(Exception e) {
-    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Unexpected Error!");
   }
 }

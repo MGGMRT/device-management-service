@@ -8,14 +8,12 @@ import com.mgg.devicemanagement.mapper.DeviceMapperImpl;
 import com.mgg.devicemanagement.model.Device;
 import com.mgg.devicemanagement.repository.DeviceRepository;
 import com.mgg.devicemanagement.util.FakeObjects;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import javax.json.JsonPatch;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,7 +27,10 @@ class DeviceServiceTest {
 
   @InjectMocks private DeviceService deviceService;
   @Mock private DeviceRepository deviceRepository;
-  @Mock private ObjectMapper objectMapper;
+
+  @Mock(lenient = true)
+  private ObjectMapper objectMapper;
+
   @Mock private DeviceMapperImpl deviceMapper;
 
   @Test
@@ -179,24 +180,6 @@ class DeviceServiceTest {
     assertEquals(deviceList.get(0).getName(), deviceResponseDtoList.get(0).getName());
   }
 
-  @Disabled
-  @Test
-  public void partlyUpdateDevice_shouldReturnDeviceResponseDtoWhenValidKeyAndJsonPatch() {
-    // Given
-    String deviceKey = "7937cd0d-92d0-45b9-b7df-75986a9f1a1f";
-    Device device = FakeObjects.getDevice();
-    when(deviceRepository.findByDeviceKey(anyString())).thenReturn(Optional.of(device));
-    when(deviceRepository.save(any(Device.class))).thenReturn(device);
-
-    // When
-    DeviceResponseDto deviceResponseDto =
-        deviceService.partlyUpdateDevice(deviceKey, any(JsonPatch.class));
-    // Then
-    verify(deviceRepository, times(1)).findByDeviceKey(anyString());
-    verify(deviceRepository, times(1)).save(any(Device.class));
-    assertTrue(nonNull(deviceResponseDto));
-  }
-
   @Test
   public void partlyUpdateDevice_shouldReturnNotFoundExceptipnWhenInValidKeyAndJsonPatch() {
     // Given
@@ -206,7 +189,7 @@ class DeviceServiceTest {
     // When
     assertThrows(
         NotFoundDeviceException.class,
-        () -> deviceService.partlyUpdateDevice(deviceKey, any(JsonPatch.class)));
+        () -> deviceService.partlyUpdateDevice(deviceKey, any(String.class)));
 
     // Then
     verify(deviceRepository, times(1)).findByDeviceKey(anyString());

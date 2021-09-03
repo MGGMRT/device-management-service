@@ -1,5 +1,7 @@
 package com.mgg.devicemanagement.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.mgg.devicemanagement.dto.request.DeviceRequestDto;
 import com.mgg.devicemanagement.dto.response.DeviceResponseDto;
 import com.mgg.devicemanagement.service.DeviceService;
@@ -42,7 +44,8 @@ public class DeviceController {
       value = DEVICES,
       consumes = MediaType.APPLICATION_JSON_VALUE,
       produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<DeviceResponseDto> createDevice(@Valid @RequestBody DeviceRequestDto deviceRequestDto) {
+  public ResponseEntity<DeviceResponseDto> createDevice(
+      @Valid @RequestBody DeviceRequestDto deviceRequestDto) {
     log.info(
         "Creating a device with name={}, brand={}",
         deviceRequestDto.getDeviceName(),
@@ -130,7 +133,8 @@ public class DeviceController {
       description = "Returned when no device is found for given device key.")
   @PatchMapping(value = DEVICES_PATH_VARIABLE, consumes = "application/json-patch+json")
   public ResponseEntity<DeviceResponseDto> updatePartlyDeviceByDeviceKey(
-      @PathVariable(name = "deviceKey") String deviceKey, @RequestBody JsonPatch patch) {
+      @PathVariable(name = "deviceKey") String deviceKey, @RequestBody String patch)
+      throws JsonProcessingException {
     log.info("Partly updating a device with deviceKey={}", deviceKey);
     DeviceResponseDto deviceResponseDto = deviceService.partlyUpdateDevice(deviceKey, patch);
     return ResponseEntity.ok(deviceResponseDto);

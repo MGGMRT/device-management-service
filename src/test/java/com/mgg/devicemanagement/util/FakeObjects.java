@@ -1,5 +1,6 @@
 package com.mgg.devicemanagement.util;
 
+import com.mgg.devicemanagement.dto.request.DevicePatch;
 import com.mgg.devicemanagement.dto.request.DeviceRequestDto;
 import com.mgg.devicemanagement.model.Device;
 
@@ -43,5 +44,12 @@ public class FakeObjects {
     secondDevice.setCreatedTime(LocalDateTime.now());
     secondDevice.setModifiedTime(LocalDateTime.now());
     return Arrays.asList(firstDevice, secondDevice);
+  }
+
+  public static DevicePatch buildDevicePatch() {
+    return DevicePatch.builder()
+            .path("brand")
+            .value("apple")
+            .build();
   }
 }
