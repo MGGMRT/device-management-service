@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mgg.devicemanagement.dto.request.DeviceRequestDto;
 import com.mgg.devicemanagement.dto.response.DeviceResponseDto;
 import com.mgg.devicemanagement.exception.NotFoundDeviceException;
+import com.mgg.devicemanagement.mapper.DeviceMapperImpl;
 import com.mgg.devicemanagement.model.Device;
 import com.mgg.devicemanagement.repository.DeviceRepository;
 import com.mgg.devicemanagement.util.FakeObjects;
@@ -29,6 +30,7 @@ class DeviceServiceTest {
   @InjectMocks private DeviceService deviceService;
   @Mock private DeviceRepository deviceRepository;
   @Mock private ObjectMapper objectMapper;
+  @Mock private DeviceMapperImpl deviceMapper;
 
   @Test
   public void createDevice_shouldReturnDeviceResponseDtoWhenValidDeviceRequestDto() {
@@ -36,6 +38,7 @@ class DeviceServiceTest {
     DeviceRequestDto deviceRequestDto = FakeObjects.getDeviceRequestDto();
     Device device = FakeObjects.getDevice();
     when(deviceRepository.save(any(Device.class))).thenReturn(device);
+    when(deviceMapper.deviceFromDeviceRequestDto(any(DeviceRequestDto.class))).thenReturn(device);
 
     // When
     DeviceResponseDto deviceResponseDto = deviceService.createDevice(deviceRequestDto);

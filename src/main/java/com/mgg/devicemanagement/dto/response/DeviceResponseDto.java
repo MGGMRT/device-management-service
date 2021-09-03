@@ -1,6 +1,5 @@
 package com.mgg.devicemanagement.dto.response;
 
-import lombok.Data;
 import lombok.Value;
 
 @Value

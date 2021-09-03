@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mgg.devicemanagement.dto.request.DeviceRequestDto;
 import com.mgg.devicemanagement.dto.response.DeviceResponseDto;
 import com.mgg.devicemanagement.exception.NotFoundDeviceException;
+import com.mgg.devicemanagement.mapper.DeviceMapperImpl;
 import com.mgg.devicemanagement.model.Device;
 import com.mgg.devicemanagement.repository.DeviceRepository;
 import lombok.AllArgsConstructor;
@@ -24,6 +25,7 @@ public class DeviceService {
 
   private final DeviceRepository deviceRepository;
   private final ObjectMapper objectMapper;
+  private final DeviceMapperImpl deviceMapper;
 
   public DeviceResponseDto createDevice(DeviceRequestDto deviceRequestDto) {
     log.info("creating device");
@@ -33,9 +35,7 @@ public class DeviceService {
   }
 
   private Device getDevice(DeviceRequestDto deviceRequestDto) {
-    Device device = new Device();
-    device.setName(deviceRequestDto.getDeviceName());
-    device.setBrand(deviceRequestDto.getBrandName());
+    Device device = deviceMapper.deviceFromDeviceRequestDto(deviceRequestDto);
     device.setDeviceKey(UUID.randomUUID().toString());
     return device;
   }

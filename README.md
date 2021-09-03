@@ -34,7 +34,7 @@ To visit full API definitions go to: `http://localhost:8080/swagger-ui/index.htm
 
 ## Endpoints
 * `POST /api/devices` create a device in the database, the payload structure:
-```aidl
+```
 {
     "deviceName": "....",
     "brandName": "...."
