@@ -9,8 +9,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.client.HttpServerErrorException;
-import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
-
 import javax.persistence.OptimisticLockException;
 import javax.validation.ConstraintViolationException;
 import java.util.List;
@@ -47,6 +45,11 @@ public class ErrorHandlingControllerAdvice {
   @ExceptionHandler(NotFoundDeviceException.class)
   public ResponseEntity<Object> onNotFoundDeviceException(NotFoundDeviceException e) {
     return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+  }
+
+  @ExceptionHandler(UnRecognizedDevicePatchException.class)
+  public ResponseEntity<Object> onUnRecognizedDevicePatchException(UnRecognizedDevicePatchException e) {
+    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
   }
 
   @ExceptionHandler(OptimisticLockException.class)

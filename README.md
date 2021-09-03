@@ -51,6 +51,12 @@ To visit full API definitions go to: `http://localhost:8080/swagger-ui/index.htm
 }
 ```
 * `PATCH /api/devices/{deviceKey}` partly update the device defined by device key.
+```
+{ 
+    "path": "brand", 
+    "value": "apple" 
+}
+```
 
 ## Architecture overview
 MVC design pattern and stateless beans are used on the project. It means the server does not store any state about the client session on the server side. There are some very noticeable advantage for having REST APIs stateless:

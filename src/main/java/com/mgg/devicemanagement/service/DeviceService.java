@@ -6,6 +6,7 @@ import com.mgg.devicemanagement.dto.request.DevicePatch;
 import com.mgg.devicemanagement.dto.request.DeviceRequestDto;
 import com.mgg.devicemanagement.dto.response.DeviceResponseDto;
 import com.mgg.devicemanagement.exception.NotFoundDeviceException;
+import com.mgg.devicemanagement.exception.UnRecognizedDevicePatchException;
 import com.mgg.devicemanagement.mapper.DeviceMapperImpl;
 import com.mgg.devicemanagement.model.Device;
 import com.mgg.devicemanagement.repository.DeviceRepository;
@@ -99,7 +100,7 @@ public class DeviceService {
     } else if (devicePatch.getPath().equals("name")) {
       device.setName(devicePatch.getValue());
     } else {
-      throw new NotFoundDeviceException(
+      throw new UnRecognizedDevicePatchException(
           "Device patch path not found. Please enter valid value such as brand / name ");
     }
   }
@@ -107,7 +108,7 @@ public class DeviceService {
   private DevicePatch getDevicePatch(String patch) throws JsonProcessingException {
     DevicePatch devicePatch = objectMapper.readValue(patch, DevicePatch.class);
     if (isNull(devicePatch.getPath()) || isNull(devicePatch.getValue())) {
-      throw new NotFoundDeviceException(" Please check the json request object!. ");
+      throw new UnRecognizedDevicePatchException(" Please check the json request object!. ");
     }
     return devicePatch;
   }

@@ -1,9 +1,12 @@
 package com.mgg.devicemanagement.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mgg.devicemanagement.dto.request.DevicePatch;
 import com.mgg.devicemanagement.dto.request.DeviceRequestDto;
 import com.mgg.devicemanagement.dto.response.DeviceResponseDto;
 import com.mgg.devicemanagement.exception.NotFoundDeviceException;
+import com.mgg.devicemanagement.exception.UnRecognizedDevicePatchException;
 import com.mgg.devicemanagement.mapper.DeviceMapperImpl;
 import com.mgg.devicemanagement.model.Device;
 import com.mgg.devicemanagement.repository.DeviceRepository;
@@ -13,10 +16,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
 import java.util.List;
 import java.util.Optional;
-
 import static java.util.Objects.nonNull;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -28,8 +29,7 @@ class DeviceServiceTest {
   @InjectMocks private DeviceService deviceService;
   @Mock private DeviceRepository deviceRepository;
 
-  @Mock(lenient = true)
-  private ObjectMapper objectMapper;
+  @Mock() private ObjectMapper objectMapper;
 
   @Mock private DeviceMapperImpl deviceMapper;
 
@@ -181,7 +181,31 @@ class DeviceServiceTest {
   }
 
   @Test
-  public void partlyUpdateDevice_shouldReturnNotFoundExceptipnWhenInValidKeyAndJsonPatch() {
+  public void partlyUpdateDevice_shouldReturnDeviceResponseDtoWhenValidKeyAndValidJsonPatch()
+      throws JsonProcessingException {
+    // Given
+    Device device = FakeObjects.getDevice();
+    when(deviceRepository.findByDeviceKey(anyString())).thenReturn(Optional.of(device));
+    when(deviceRepository.save(any(Device.class))).thenReturn(device);
+    DevicePatch devicePatch = FakeObjects.buildDevicePatch();
+    String pathRequest = "{ \"path\": \"brand\", \"value\": \"apple\" }";
+    when(objectMapper.readValue(anyString(), eq(DevicePatch.class))).thenReturn(devicePatch);
+
+    // When
+    DeviceResponseDto deviceResponseDto =
+        deviceService.partlyUpdateDevice(device.getDeviceKey(), pathRequest);
+
+    // Then
+    assertTrue(nonNull(deviceResponseDto));
+    assertEquals(device.getDeviceKey(), deviceResponseDto.getDeviceKey());
+    assertEquals(device.getBrand(), deviceResponseDto.getBrand());
+    assertEquals(device.getName(), deviceResponseDto.getName());
+    verify(deviceRepository, times(1)).findByDeviceKey(anyString());
+    verify(deviceRepository, times(1)).save(any(Device.class));
+  }
+
+  @Test
+  public void partlyUpdateDevice_shouldReturnNotFoundExceptionWhenInValidKeyAndJsonPatch() {
     // Given
     String deviceKey = "7937cd0d-92d0-45b9-b7df-75986a9f1a1f";
     when(deviceRepository.findByDeviceKey(anyString())).thenReturn(Optional.empty());
@@ -190,6 +214,46 @@ class DeviceServiceTest {
     assertThrows(
         NotFoundDeviceException.class,
         () -> deviceService.partlyUpdateDevice(deviceKey, any(String.class)));
+
+    // Then
+    verify(deviceRepository, times(1)).findByDeviceKey(anyString());
+  }
+
+  @Test
+  public void partlyUpdateDevice_shouldReturnBadRequestWhenValidKeyAndInValidJsonPatch()
+      throws JsonProcessingException {
+    // Given
+    Device device = FakeObjects.getDevice();
+    when(deviceRepository.findByDeviceKey(anyString())).thenReturn(Optional.of(device));
+    DevicePatch devicePatch = FakeObjects.buildDevicePatch();
+    devicePatch.setPath("deviceKey");
+    String pathRequest = "{ \"path\": \"deviceKey\", \"value\": \"apple\" }";
+    when(objectMapper.readValue(anyString(), eq(DevicePatch.class))).thenReturn(devicePatch);
+
+    // When
+    assertThrows(
+        UnRecognizedDevicePatchException.class,
+        () -> deviceService.partlyUpdateDevice(device.getDeviceKey(), pathRequest));
+
+    // Then
+    verify(deviceRepository, times(1)).findByDeviceKey(anyString());
+  }
+
+  @Test
+  public void partlyUpdateDevice_shouldReturnBadRequestWhenValidKeyAndInValidJsonPatchField()
+      throws JsonProcessingException {
+    // Given
+    Device device = FakeObjects.getDevice();
+    when(deviceRepository.findByDeviceKey(anyString())).thenReturn(Optional.of(device));
+    DevicePatch devicePatch = FakeObjects.buildDevicePatch();
+    devicePatch.setPath("deviceKey");
+    String pathRequest = "{ \"pathx\": \"deviceKey\", \"value\": \"apple\" }";
+    when(objectMapper.readValue(anyString(), eq(DevicePatch.class))).thenReturn(devicePatch);
+
+    // When
+    assertThrows(
+        UnRecognizedDevicePatchException.class,
+        () -> deviceService.partlyUpdateDevice(device.getDeviceKey(), pathRequest));
 
     // Then
     verify(deviceRepository, times(1)).findByDeviceKey(anyString());
