@@ -1,0 +1,11 @@
+.device-list {
+    list-style: none;
+    padding: 0rem 1rem;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+  }
+  
+  .device-list__fallback {
+    color: white;
+    text-align: center;
+  }

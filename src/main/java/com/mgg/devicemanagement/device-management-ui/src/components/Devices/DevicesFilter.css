@@ -1,0 +1,35 @@
+.devices-filter {
+  color: white;
+  padding: 0 1rem;
+}
+
+.devices-filter__control {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-around;
+  padding: 1rem 0;
+  background-color: #7f8c8d;
+  border-radius: 1rem;
+}
+
+.devices-filter label {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.devices-filter select {
+  font: inherit;
+  padding: 0.5rem 3rem;
+  font-weight: bold;
+  border-radius: 6px;
+  width: 20rem;
+}
+
+.devices-filter button {
+  width: 8rem;
+  border-radius: 12px;
+  margin-right: 1rem;
+  cursor: pointer;
+  padding: 1rem 2rem;
+}

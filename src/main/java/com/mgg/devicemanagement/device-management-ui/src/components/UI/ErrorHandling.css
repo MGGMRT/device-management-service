@@ -1,0 +1,13 @@
+.container {
+    height: 6rem;
+    width: 35rem;
+    border-radius: 1rem;
+    background-color: red;
+    margin: auto auto;
+    color:white;
+}
+
+.container_list li {
+
+    padding-top: 1rem;
+}

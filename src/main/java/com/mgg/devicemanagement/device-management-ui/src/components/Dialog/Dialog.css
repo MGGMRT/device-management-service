@@ -1,0 +1,61 @@
+.overlay {
+    height: 13rem;
+    width: 30rem;
+    border-radius: 1rem;
+    /* margin: auto auto; */
+    background-color: white;
+    /* justify-content: center; */
+   
+}
+
+.dialog {
+    padding: 1rem 1rem ;
+}
+
+.dialog__content {
+    /* background-color: aqua; */
+    margin-top: 0rem;
+    margin-bottom: 3rem;
+}
+.dialog__title {
+    margin: 0rem;
+}
+
+.dialog__description {
+    margin-top: 1rem;
+}
+
+.dialog hr {
+    margin-bottom: 1rem;
+}
+
+.dialog__footer {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.dialog__footer button {
+    font: inherit;
+    cursor: pointer;
+    background-color: transparent;
+    border: 1px solid #8a2b06;
+    padding: 0.5rem 2rem;
+    border-radius: 25px;
+    margin-left: 1rem;
+  }
+  
+  .dialog__footer button:hover,
+  .dialog__footer button:active {
+    background-color: #5a1a01;
+    border-color: #5a1a01;
+    color: white;
+  }
+
+  .dialog__cancel {
+    color: #8a2b06;
+  }
+  
+  .dialog__confirm {
+    background-color: #8a2b06;
+    color: #8a2b06;
+  }

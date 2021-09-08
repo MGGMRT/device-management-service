@@ -18,13 +18,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.json.JsonPatch;
 import javax.validation.Valid;
 import java.util.List;
 
 import static com.mgg.devicemanagement.constants.RestApiUrlConstants.*;
 import static java.util.Objects.isNull;
 
+@CrossOrigin(origins="http://localhost:3002")
 @Slf4j
 @Validated
 @AllArgsConstructor
