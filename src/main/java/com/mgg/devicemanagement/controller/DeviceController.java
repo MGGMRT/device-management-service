@@ -24,7 +24,7 @@ import java.util.List;
 import static com.mgg.devicemanagement.constants.RestApiUrlConstants.*;
 import static java.util.Objects.isNull;
 
-@CrossOrigin(origins="http://localhost:3002")
+@CrossOrigin
 @Slf4j
 @Validated
 @AllArgsConstructor

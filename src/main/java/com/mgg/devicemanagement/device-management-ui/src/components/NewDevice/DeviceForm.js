@@ -5,7 +5,7 @@ const DeviceForm = (props) => {
     const[enteredName,setEnteredName] = useState('');
     const[enteredBrand,setEnteredBrand] = useState('');
 
-    const nameChangeHandler =( event) => {
+    const nameChangeHandler = event => {
         setEnteredName(event.target.value);
     }
 
