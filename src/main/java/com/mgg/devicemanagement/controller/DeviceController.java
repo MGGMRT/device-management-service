@@ -1,7 +1,6 @@
 package com.mgg.devicemanagement.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.mgg.devicemanagement.dto.request.DeviceRequestDto;
 import com.mgg.devicemanagement.dto.response.DeviceResponseDto;
 import com.mgg.devicemanagement.service.DeviceService;
@@ -17,14 +16,12 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
 import javax.validation.Valid;
 import java.util.List;
 
 import static com.mgg.devicemanagement.constants.RestApiUrlConstants.*;
 import static java.util.Objects.isNull;
 
-@CrossOrigin
 @Slf4j
 @Validated
 @AllArgsConstructor

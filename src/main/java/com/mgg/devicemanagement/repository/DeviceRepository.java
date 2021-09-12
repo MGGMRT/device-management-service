@@ -13,4 +13,6 @@ public interface DeviceRepository extends JpaRepository<Device, Long> {
   Optional<Device> findByDeviceKey(String deviceKey);
 
   List<Device> findByBrand(String brandName);
+
+  List<Device> findByBrandLikeIgnoreCase(String brandName);
 }

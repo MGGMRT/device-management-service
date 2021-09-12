@@ -1,0 +1,22 @@
+.device-header {
+    display: flex;
+    width: 96%;
+    height: 3.5rem;
+    color: white;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem;
+    background-color: #b53471;
+  }
+
+  .device-header__description {
+    padding-left: 1rem;
+    display: flex;
+    flex-direction: row;
+    gap: 13rem;
+    align-items: center;
+    flex-flow:row ;
+    justify-content: flex-start;
+    flex: 1;
+    font-size: small;
+  }

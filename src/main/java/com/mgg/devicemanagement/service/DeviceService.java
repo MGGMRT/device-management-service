@@ -13,6 +13,7 @@ import com.mgg.devicemanagement.repository.DeviceRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -80,7 +81,7 @@ public class DeviceService {
   }
 
   public List<DeviceResponseDto> searchDeviceByBrandName(String brandName) {
-    List<Device> deviceList = deviceRepository.findByBrand(brandName);
+    List<Device> deviceList = deviceRepository.findByBrandLikeIgnoreCase("%"+brandName+"%");
     return transformToDeviceResponseDtoList(deviceList);
   }
 

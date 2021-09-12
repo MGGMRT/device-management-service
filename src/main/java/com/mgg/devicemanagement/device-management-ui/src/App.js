@@ -6,24 +6,15 @@ import Devices from './components/Devices/Devices';
 import ErrorHandling from './components/UI/ErrorHandling';
 
 function App() {
-  const [devices, setDevices] = useState([]);
+  // const [devices, setDevices] = useState([]);
   const [error, setError] = useState([]);
+  const [filteredBrand, setFilteredBrand] = useState('');
+  const [filteredDevices, setFilteredDevice] = useState([]);
 
-  const getDevicesHandler = () => {
-    fetch('http://localhost:8080/api/devices', {
-      method: "GET",
-      headers: {
-        "Accept": "application/json"
-      }
-    })
-      .then(response => response.json())
-      .then(data => {
-        setDevices(data);
-        setError([]);
-      })
-      .catch(err => console.log(err));
-  }
-
+  const searchKeyChangeHandler = selectedBrand => {
+    setFilteredBrand(selectedBrand);
+  };
+  
   const addDeviceHandler = device => {
     fetch('http://localhost:8080/api/devices', {
       method: "POST",
@@ -40,7 +31,7 @@ function App() {
           return Promise.reject(response);
         }
       })
-      .then(data => getDevicesHandler())
+      .then(data => searchDeviceHandler())
       .catch((response) => {
         response.json().then((json) => {
           setError(json.violations);
@@ -63,15 +54,29 @@ function App() {
           return Promise.reject(response);
         }
       })
-      .then(() => getDevicesHandler())
+      .then(() => searchDeviceHandler())
       .catch(err => console.log(err.message));
+  }
+
+  const searchDeviceHandler = () => {
+    fetch('http://localhost:8080/api/devices?brandName=' + filteredBrand, {
+      method: "GET",
+      headers: {
+        "Accept": "application/json"
+      }
+    })
+      .then(response => response.json())
+      .then(data => {
+        setFilteredDevice(data);
+      })
+      .catch(err => console.log(err));
   }
 
   return (
     <div>
       {error.length > 0 && <ErrorHandling violations={error} />}
       <NewDevice onAddDevice={addDeviceHandler} />
-      <Devices items={devices} refresh={getDevicesHandler} onDeleteDevice={deleteDeviceHandler} />
+      <Devices searchedDeviceItem={filteredDevices} searchKeyChangedHandler={searchKeyChangeHandler} onSearchDeviceByBrand={searchDeviceHandler} onDeleteDevice={deleteDeviceHandler} />
     </div>
   );
 }

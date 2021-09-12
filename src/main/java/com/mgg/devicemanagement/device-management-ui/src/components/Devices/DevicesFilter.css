@@ -18,18 +18,15 @@
   margin-bottom: 0.5rem;
 }
 
-.devices-filter select {
-  font: inherit;
-  padding: 0.5rem 3rem;
-  font-weight: bold;
+.devices-filter input {
+  padding: 0.5rem 0.5rem; 
   border-radius: 6px;
-  width: 20rem;
+  width: 23rem;
 }
 
 .devices-filter button {
-  width: 8rem;
+  width: 7rem;
   border-radius: 12px;
-  margin-right: 1rem;
   cursor: pointer;
   padding: 1rem 2rem;
 }

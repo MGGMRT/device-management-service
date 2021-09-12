@@ -30,7 +30,7 @@ const DeviceForm = (props) => {
         <form onSubmit={submitHandler}>
         <div className='new-device__controls'>
         <div className='new-device__control'>
-          <label>Name</label>
+          <label>Device Name</label>
           <input
             type='text'
             value={enteredName}
@@ -38,7 +38,7 @@ const DeviceForm = (props) => {
           />
         </div>
         <div className='new-device__control'>
-          <label>Brand</label>
+          <label>Device Brand</label>
           <input
             type='text'
             value={enteredBrand}

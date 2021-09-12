@@ -5,12 +5,12 @@ import DeviceForm from './DeviceForm';
 describe('DeviceForm component', () => {
     test('should capture the Name context when renders device form ', () => {  
         render(<DeviceForm />)
-        const outputElement = screen.getByText('Name');
+        const outputElement = screen.getByText('Device Name');
         expect(outputElement).toBeInTheDocument();
     })
     test('should capture the Brand context when renders device form ', () => {  
         render(<DeviceForm />)
-        const outputElement = screen.getByText('Brand');
+        const outputElement = screen.getByText('Device Brand');
         expect(outputElement).toBeInTheDocument();
     })
     test('should capture the submit button title name when renders device form ', () => {  

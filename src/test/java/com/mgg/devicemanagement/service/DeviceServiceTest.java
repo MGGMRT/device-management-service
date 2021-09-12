@@ -165,14 +165,14 @@ class DeviceServiceTest {
   public void searchDeviceByBrandName_returnDeviceResponseDtoListWhenEnterBrandName() {
     // Given
     List<Device> deviceList = FakeObjects.getDeviceList();
-    when(deviceRepository.findByBrand(anyString())).thenReturn(deviceList);
+    when(deviceRepository.findByBrandLikeIgnoreCase(anyString())).thenReturn(deviceList);
 
     // When
     List<DeviceResponseDto> deviceResponseDtoList =
         deviceService.searchDeviceByBrandName(anyString());
 
     // Then
-    verify(deviceRepository, times(1)).findByBrand(anyString());
+    verify(deviceRepository, times(1)).findByBrandLikeIgnoreCase(anyString());
     assertTrue(nonNull(deviceResponseDtoList));
     assertEquals(deviceList.size(), deviceResponseDtoList.size());
     assertEquals(deviceList.get(0).getDeviceKey(), deviceResponseDtoList.get(0).getDeviceKey());
