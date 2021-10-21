@@ -16,8 +16,6 @@ public class FakeObjects {
     device.setDeviceKey(UUID.randomUUID().toString());
     device.setBrand("Apple");
     device.setName("Keyboard");
-    device.setCreatedTime(LocalDateTime.now());
-    device.setModifiedTime(LocalDateTime.now());
     return device;
   }
 
@@ -26,8 +24,8 @@ public class FakeObjects {
     device.setDeviceKey(UUID.randomUUID().toString());
     device.setBrand(brand);
     device.setName(name);
-    device.setCreatedTime(LocalDateTime.now());
-    device.setModifiedTime(LocalDateTime.now());
+    device.setCreatedDate(LocalDateTime.now());
+    device.setModifiedDate(LocalDateTime.now());
     return device;
   }
 
@@ -41,8 +39,8 @@ public class FakeObjects {
     secondDevice.setDeviceKey(UUID.randomUUID().toString());
     secondDevice.setBrand("Dell");
     secondDevice.setName("Keyboard");
-    secondDevice.setCreatedTime(LocalDateTime.now());
-    secondDevice.setModifiedTime(LocalDateTime.now());
+    secondDevice.setCreatedDate(LocalDateTime.now());
+    secondDevice.setModifiedDate(LocalDateTime.now());
     return Arrays.asList(firstDevice, secondDevice);
   }
 

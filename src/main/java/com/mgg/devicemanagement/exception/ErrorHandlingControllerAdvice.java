@@ -71,6 +71,6 @@ public class ErrorHandlingControllerAdvice {
 
   @ExceptionHandler(Exception.class)
   public ResponseEntity<Object> onException(Exception e) {
-    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Unexpected Error!");
+    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Unexpected Error!, please call customer center");
   }
 }

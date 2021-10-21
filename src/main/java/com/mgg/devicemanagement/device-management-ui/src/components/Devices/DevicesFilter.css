@@ -1,11 +1,21 @@
 .devices-filter {
   color: white;
   padding: 0 1rem;
+  width: 100%;
 }
 
 .devices-filter__control {
-  display: flex;
   width: 100%;
+  background-color:  #7f8c8d;
+  border-radius: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.device-filter__order {
+  display: flex;
+  width: 70%;
   align-items: center;
   justify-content: space-around;
   padding: 1rem 0;
@@ -21,7 +31,7 @@
 .devices-filter input {
   padding: 0.5rem 0.5rem; 
   border-radius: 6px;
-  width: 23rem;
+  width: 16rem;
 }
 
 .devices-filter button {

@@ -10,9 +10,11 @@ const DevicesFilter = (props) => {
   return (
     <div className='devices-filter'>
       <div className='devices-filter__control'>
-        <label>Search by brand</label>
-        <input type="text" placeholder="Search brand name..." onChange={onChangeSearchKey} />
-        <button onClick={props.onSearchDeviceBrand} > Search </button>
+        <div className='device-filter__order' >
+          <label>Search by brand</label>
+          <input type="text" placeholder="Search brand name..." onChange={onChangeSearchKey} />
+          <button onClick={props.onSearchDeviceBrand} > Search </button>
+        </div>
       </div>
     </div>
   );

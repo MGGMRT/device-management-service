@@ -1,18 +1,20 @@
 package com.mgg.devicemanagement.model;
 
+import com.mgg.devicemanagement.model.base.AuditEntity;
 import lombok.Data;
 
-import javax.persistence.*;
-import java.time.LocalDateTime;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.Version;
+import java.io.Serializable;
 
 @Data
 @Entity
 @Table(name = "devices")
-public class Device {
+public class Device extends AuditEntity implements Serializable {
 
-  @Id @GeneratedValue Long id;
-
-  @Column(name = "deviceKey", nullable = false)
+  @Column(name = "device_key", nullable = false)
   String deviceKey;
 
   @Column(name = "name", nullable = false)
@@ -23,20 +25,20 @@ public class Device {
 
   @Version Long version;
 
-  @Column(name = "created_time", nullable = false, updatable = false)
-  LocalDateTime createdTime;
-
-  @Column(name = "modified_time", nullable = false)
-  LocalDateTime modifiedTime;
-
-  @PrePersist
-  protected void prePersist() {
-    this.createdTime = LocalDateTime.now();
-    this.modifiedTime = LocalDateTime.now();
-  }
-
-  @PreUpdate
-  public void preUpdate() {
-    this.modifiedTime = LocalDateTime.now();
-  }
+//  @Column(name = "created_time", nullable = false, updatable = false)
+//  LocalDateTime createdTime;
+//
+//  @Column(name = "modified_time", nullable = false)
+//  LocalDateTime modifiedTime;
+//
+//  @PrePersist
+//  protected void prePersist() {
+//    this.createdTime = LocalDateTime.now();
+//    this.modifiedTime = LocalDateTime.now();
+//  }
+//
+//  @PreUpdate
+//  public void preUpdate() {
+//    this.modifiedTime = LocalDateTime.now();
+//  }
 }
